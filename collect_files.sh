@@ -33,9 +33,7 @@ def get_all_files(directory):
             all_files.append(os.path.join(dirpath, filename))
     return all_files
 
-files = get_all_files(input_dir)
-
-for filepath in files:
+for filepath in get_all_files(input_dir):
     if os.path.isfile(filepath):
         shutil.copy2(filepath, os.path.join(output_dir, os.path.basename(filepath)))
 EOF
