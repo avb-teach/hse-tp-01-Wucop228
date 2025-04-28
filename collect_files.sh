@@ -18,6 +18,7 @@ mkdir -p "$output_dir"
 python3 - <<EOF
 import os
 import shutil
+from pathlib import Path
 
 max_depth=None if "$max_depth" == "" else int("$max_depth")
 input_dir="$input_dir"
@@ -33,7 +34,13 @@ def get_all_files(directory):
             all_files.append(os.path.join(dirpath, filename))
     return all_files
 
-for filepath in get_all_files(input_dir):
-    if os.path.isfile(filepath):
-        shutil.copy2(filepath, os.path.join(output_dir, os.path.basename(filepath)))
+if max_depth is None:
+    for filepath in get_all_files(input_dir):
+        if os.path.isfile(filepath):
+            shutil.copy2(filepath, os.path.join(output_dir, os.path.basename(filepath)))
+else:
+    for filepath in get_all_files(input_dir):
+        if os.path.isfile(filepath):
+            os.makedirs(os.path.join(output_dir, '/'.join(list(Path(filepath).parts)[:-1])), exist_ok=True)
+            shutil.copy2(filepath, os.path.join(output_dir, '/'.join(list(Path(filepath).parts))))
 EOF
