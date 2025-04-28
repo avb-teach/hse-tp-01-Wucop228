@@ -41,6 +41,8 @@ if max_depth is None:
 else:
     for filepath in get_all_files(input_dir):
         if os.path.isfile(filepath):
-            os.makedirs(os.path.join(output_dir, '/'.join(list(Path(filepath).parts)[:-1])), exist_ok=True)
-            shutil.copy2(filepath, os.path.join(output_dir, '/'.join(list(Path(filepath).parts))))
+            print(filepath)
+            print(os.path.join(output_dir, '/'.join(list(Path(filepath).parts)[1:-1])))
+            os.makedirs(os.path.join(output_dir, '/'.join(list(Path(filepath).parts)[1:-1])), exist_ok=True)
+            shutil.copy2(filepath, os.path.join(output_dir, '/'.join(list(Path(filepath).parts[1:]))))
 EOF
